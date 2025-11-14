@@ -8,4 +8,3 @@ router.post("/api/auth/registro", registroController);
 router.post("/api/auth/login", loginController);
 
 export default router;
-//hola mundo
