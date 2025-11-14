@@ -6,7 +6,7 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  output = "../src/generated/client"
 }
 
 datasource db {
@@ -19,6 +19,8 @@ model User {
   username        String   @unique
   email           String   @unique
   password        String
+  validadoDia     DateTime?
+
 
   messages        Message[]           @relation("MessageSender")
   pinnedMessages  PinnedMessage[]     @relation("PinnedByUser")
