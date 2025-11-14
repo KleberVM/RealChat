@@ -7,6 +7,7 @@ import routes from "./routes/route";
 import bodyParser from "body-parser";
 import "./config/passport.config";
 import { configurarSocketIO } from "../src/sockets/socket.handler";
+import path from "path";
 
 dotenv.config();
 
@@ -26,9 +27,14 @@ const start = async () => {
         app.use(bodyParser.json());
         app.use(passport.initialize());
         
+        // static files
+        app.use(express.static(path.join(__dirname,"public")));
+
         // rutas
         app.use("/", routes);
         
+        
+
         // configurar socket.io
         configurarSocketIO(io);
         
