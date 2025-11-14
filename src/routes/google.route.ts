@@ -5,16 +5,16 @@ import { googleCallbackController } from "../controllers/google.controller";
 const router = Router();
 // hola mundo
 // ruta para iniciar autenticacion con Google
-router.get("/api/auth/google", 
+router.get("/google", 
     passport.authenticate("google", {
         scope: ["profile", "email"]
     })
 );
 // callback de Google OAuth
-router.get("/api/auth/google/callback", 
+router.get("/google/callback", 
     passport.authenticate("google", { 
         session: false,
-        failureRedirect: "/api/auth/login"
+        failureRedirect: "/login"
     }),
     googleCallbackController
 );

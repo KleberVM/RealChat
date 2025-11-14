@@ -1,5 +1,6 @@
 import prisma from "../db/prisma";
 import { CreateMessageDto, UpdateMessageDto } from "../dtos/message.dto";
+import { emitMessageUpdated, emitMessageDeleted } from "../sockets/socket.utils";
 
 // crear un nuevo mensaje
 export const crearMensaje = async (dto: CreateMessageDto, senderId: number) => {
@@ -194,6 +195,9 @@ export const actualizarMensaje = async (messageId: number, dto: UpdateMessageDto
             }
         });
 
+        // emitir evento de socket
+        emitMessageUpdated(mensajeExistente.chatId, mensaje);
+
         return {
             message: "mensaje actualizado exitosamente",
             status: 200,
@@ -232,11 +236,16 @@ export const eliminarMensaje = async (messageId: number, userId: number) => {
             };
         }
 
+        const chatId = mensajeExistente.chatId;
+        
         await prisma.message.delete({
             where: {
                 id: messageId
             }
         });
+
+        // emitir evento de socket
+        emitMessageDeleted(chatId, messageId);
 
         return {
             message: "mensaje eliminado exitosamente",

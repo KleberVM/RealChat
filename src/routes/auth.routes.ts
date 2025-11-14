@@ -3,8 +3,8 @@ import { loginController, registroController } from "../controllers/auth.control
 
 const router = Router();
 
-router.post("/api/auth/registro", registroController);
+router.post("/registro", registroController);
 
-router.post("/api/auth/login", loginController);
+router.post("/login", loginController);
 
 export default router;

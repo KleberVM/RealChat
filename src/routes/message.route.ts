@@ -12,14 +12,14 @@ import { verificarMiembroDelChat } from "../middlewares/chat.middleware";
 const router = Router();
 
 // todas las rutas requieren autenticacion
-router.post("/api/messages", authMiddleware, crearMensajeController);
+router.post("/messages", authMiddleware, crearMensajeController);
 
-router.get("/api/chats/:chatId/messages", authMiddleware, verificarMiembroDelChat, obtenerMensajesController);
+router.get("/chats/:chatId/messages", authMiddleware, verificarMiembroDelChat, obtenerMensajesController);
 
-router.get("/api/messages/:messageId", authMiddleware, obtenerMensajeController);
+router.get("/messages/:messageId", authMiddleware, obtenerMensajeController);
 
-router.put("/api/messages/:messageId", authMiddleware, actualizarMensajeController);
+router.put("/messages/:messageId", authMiddleware, actualizarMensajeController);
 
-router.delete("/api/messages/:messageId", authMiddleware, eliminarMensajeController);
+router.delete("/messages/:messageId", authMiddleware, eliminarMensajeController);
 
 export default router;

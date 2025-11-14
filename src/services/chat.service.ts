@@ -1,5 +1,6 @@
 import prisma from "../db/prisma";
 import { CreateChatDto, UpdateChatDto, AddParticipantDto } from "../dtos/chat.dto";
+import { emitChatUpdated, emitParticipantAdded } from "../sockets/socket.utils";
 
 export const crearChat = async (dto: CreateChatDto, creatorId: number) => {
     try {
@@ -178,6 +179,9 @@ export const actualizarChat = async (chatId: number, dto: UpdateChatDto, userId:
             }
         });
 
+        // emitir evento de socket
+        emitChatUpdated(chatId, chat);
+
         return {
             message: "chat actualizado exitosamente",
             status: 200,
@@ -290,6 +294,9 @@ export const agregarParticipante = async (chatId: number, dto: AddParticipantDto
                 }
             }
         });
+
+        // emitir evento de socket
+        emitParticipantAdded(chatId, nuevoParticipante);
 
         return {
             message: "participante agregado exitosamente",
