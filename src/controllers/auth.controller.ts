@@ -1,38 +1,46 @@
-import {Request,Response} from "express";
+import { Request, Response } from "express";
+import { RegistroDto, LoginDto } from "../dtos/auth.dto";
+import { registro, login } from "../services/auth.service";
 
-import { Validate } from "class-validator";
-
-import {RegistroDto,LoginDto} from "../dtos/auth.dto";
-
-import {registro,login} from "../services/auth.service";
-
-
-export const registroController = async(req:Request,res:Response)=>{
-    const dato = req.body;
-
+export const registroController = async (req: Request, res: Response) => {
     try {
-        const {username,email,password} = req.body;
-        const user = await registro({username,email,password});
-        res.status(201).send({
-            data:user
-        });
+        const { username, email, password } = req.body;
+        const resultado = await registro({ username, email, password });
+        
+        // verificamos si el usuario ya existe
+        if (resultado.status === 400) {
+            return res.status(400).send({
+                message: resultado.message,
+                status: 400
+            });
+        }
+        
+        res.send(resultado);
     } catch (error) {
-        console.log(error);
+        console.log("error en registroController:", error);
         res.status(500).send({
-            message:"ocurrio un error al registrar el usuario",
-            status:500,
-            data:req.body
+            message: "error al registrar el usuario",
+            status: 500
         });
     }
-}
-export const loginController = async(req:Request,res:Response)=>{
-    try {
-        const {email,password} = req.body;
-        const user = await login({email,password});
-        res.status(200).json(user);
-    } catch (error) {
-        console.log(error);
-        res.status(500).send("ocurrio un error al iniciar sesión");
-    }
-}
+};
 
+export const loginController = async (req: Request, res: Response) => {
+    try {
+        const { email, password } = req.body;
+        const resultado = await login({ email, password });
+        
+        res.send({
+            message: "inicio de sesion exitoso",
+            status: 200,
+            data: resultado
+        });
+    } catch (error: any) {
+        console.log("error en loginController:", error);
+    
+        res.send({
+            message: "error en login",
+            status: 500
+        });
+    }
+};

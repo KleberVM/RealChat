@@ -6,13 +6,10 @@ dotenv.config();
 
 const jwtSecret = process.env.JWT_SECRET || "holaMundo2025";
 
-// esto le dice a typeScript que el objeto request
-// puede tener una propiedad opcional user
+// extender el tipo User de Express para incluir tokenpayload 
 declare global {
     namespace Express {
-        interface Request {
-            user?: TokenPayload;
-        }
+        interface User extends TokenPayload {}
     }
 }
 

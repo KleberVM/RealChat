@@ -183,7 +183,7 @@ export type UserGroupByOutputType = {
   id: number
   username: string
   email: string
-  password: string
+  password: string | null
   validadoDia: Date | null
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
@@ -214,7 +214,7 @@ export type UserWhereInput = {
   id?: Prisma.IntFilter<"User"> | number
   username?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
-  password?: Prisma.StringFilter<"User"> | string
+  password?: Prisma.StringNullableFilter<"User"> | string | null
   validadoDia?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   messages?: Prisma.MessageListRelationFilter
   pinnedMessages?: Prisma.PinnedMessageListRelationFilter
@@ -225,7 +225,7 @@ export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   username?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  password?: Prisma.SortOrder
+  password?: Prisma.SortOrderInput | Prisma.SortOrder
   validadoDia?: Prisma.SortOrderInput | Prisma.SortOrder
   messages?: Prisma.MessageOrderByRelationAggregateInput
   pinnedMessages?: Prisma.PinnedMessageOrderByRelationAggregateInput
@@ -239,7 +239,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
-  password?: Prisma.StringFilter<"User"> | string
+  password?: Prisma.StringNullableFilter<"User"> | string | null
   validadoDia?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   messages?: Prisma.MessageListRelationFilter
   pinnedMessages?: Prisma.PinnedMessageListRelationFilter
@@ -250,7 +250,7 @@ export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   username?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  password?: Prisma.SortOrder
+  password?: Prisma.SortOrderInput | Prisma.SortOrder
   validadoDia?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
@@ -266,14 +266,14 @@ export type UserScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"User"> | number
   username?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
-  password?: Prisma.StringWithAggregatesFilter<"User"> | string
+  password?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   validadoDia?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
 }
 
 export type UserCreateInput = {
   username: string
   email: string
-  password: string
+  password?: string | null
   validadoDia?: Date | string | null
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   pinnedMessages?: Prisma.PinnedMessageCreateNestedManyWithoutPinnedByUserInput
@@ -284,7 +284,7 @@ export type UserUncheckedCreateInput = {
   id?: number
   username: string
   email: string
-  password: string
+  password?: string | null
   validadoDia?: Date | string | null
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   pinnedMessages?: Prisma.PinnedMessageUncheckedCreateNestedManyWithoutPinnedByUserInput
@@ -294,7 +294,7 @@ export type UserUncheckedCreateInput = {
 export type UserUpdateInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validadoDia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   pinnedMessages?: Prisma.PinnedMessageUpdateManyWithoutPinnedByUserNestedInput
@@ -305,7 +305,7 @@ export type UserUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validadoDia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   pinnedMessages?: Prisma.PinnedMessageUncheckedUpdateManyWithoutPinnedByUserNestedInput
@@ -316,14 +316,14 @@ export type UserCreateManyInput = {
   id?: number
   username: string
   email: string
-  password: string
+  password?: string | null
   validadoDia?: Date | string | null
 }
 
 export type UserUpdateManyMutationInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validadoDia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
@@ -331,7 +331,7 @@ export type UserUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validadoDia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
@@ -374,6 +374,10 @@ export type UserScalarRelationFilter = {
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -433,7 +437,7 @@ export type UserUpdateOneRequiredWithoutPinnedMessagesNestedInput = {
 export type UserCreateWithoutChatsInput = {
   username: string
   email: string
-  password: string
+  password?: string | null
   validadoDia?: Date | string | null
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   pinnedMessages?: Prisma.PinnedMessageCreateNestedManyWithoutPinnedByUserInput
@@ -443,7 +447,7 @@ export type UserUncheckedCreateWithoutChatsInput = {
   id?: number
   username: string
   email: string
-  password: string
+  password?: string | null
   validadoDia?: Date | string | null
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   pinnedMessages?: Prisma.PinnedMessageUncheckedCreateNestedManyWithoutPinnedByUserInput
@@ -468,7 +472,7 @@ export type UserUpdateToOneWithWhereWithoutChatsInput = {
 export type UserUpdateWithoutChatsInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validadoDia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   pinnedMessages?: Prisma.PinnedMessageUpdateManyWithoutPinnedByUserNestedInput
@@ -478,7 +482,7 @@ export type UserUncheckedUpdateWithoutChatsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validadoDia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   pinnedMessages?: Prisma.PinnedMessageUncheckedUpdateManyWithoutPinnedByUserNestedInput
@@ -487,7 +491,7 @@ export type UserUncheckedUpdateWithoutChatsInput = {
 export type UserCreateWithoutMessagesInput = {
   username: string
   email: string
-  password: string
+  password?: string | null
   validadoDia?: Date | string | null
   pinnedMessages?: Prisma.PinnedMessageCreateNestedManyWithoutPinnedByUserInput
   chats?: Prisma.ChatParticipantCreateNestedManyWithoutUserInput
@@ -497,7 +501,7 @@ export type UserUncheckedCreateWithoutMessagesInput = {
   id?: number
   username: string
   email: string
-  password: string
+  password?: string | null
   validadoDia?: Date | string | null
   pinnedMessages?: Prisma.PinnedMessageUncheckedCreateNestedManyWithoutPinnedByUserInput
   chats?: Prisma.ChatParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -522,7 +526,7 @@ export type UserUpdateToOneWithWhereWithoutMessagesInput = {
 export type UserUpdateWithoutMessagesInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validadoDia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pinnedMessages?: Prisma.PinnedMessageUpdateManyWithoutPinnedByUserNestedInput
   chats?: Prisma.ChatParticipantUpdateManyWithoutUserNestedInput
@@ -532,7 +536,7 @@ export type UserUncheckedUpdateWithoutMessagesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validadoDia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   pinnedMessages?: Prisma.PinnedMessageUncheckedUpdateManyWithoutPinnedByUserNestedInput
   chats?: Prisma.ChatParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -541,7 +545,7 @@ export type UserUncheckedUpdateWithoutMessagesInput = {
 export type UserCreateWithoutPinnedMessagesInput = {
   username: string
   email: string
-  password: string
+  password?: string | null
   validadoDia?: Date | string | null
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   chats?: Prisma.ChatParticipantCreateNestedManyWithoutUserInput
@@ -551,7 +555,7 @@ export type UserUncheckedCreateWithoutPinnedMessagesInput = {
   id?: number
   username: string
   email: string
-  password: string
+  password?: string | null
   validadoDia?: Date | string | null
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   chats?: Prisma.ChatParticipantUncheckedCreateNestedManyWithoutUserInput
@@ -576,7 +580,7 @@ export type UserUpdateToOneWithWhereWithoutPinnedMessagesInput = {
 export type UserUpdateWithoutPinnedMessagesInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validadoDia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   chats?: Prisma.ChatParticipantUpdateManyWithoutUserNestedInput
@@ -586,7 +590,7 @@ export type UserUncheckedUpdateWithoutPinnedMessagesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validadoDia?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   chats?: Prisma.ChatParticipantUncheckedUpdateManyWithoutUserNestedInput
@@ -698,7 +702,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     id: number
     username: string
     email: string
-    password: string
+    password: string | null
     validadoDia: Date | null
   }, ExtArgs["result"]["user"]>
   composites: {}

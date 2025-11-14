@@ -1,63 +1,64 @@
 import { AuthResponse, TokenPayload } from "../interfaces/auth.interface";
-import {RegistroDto, LoginDto} from "../dtos/auth.dto";
-import {PrismaClient} from '../generated/client/client';
+import { RegistroDto, LoginDto } from "../dtos/auth.dto";
+import prisma from "../db/prisma";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 
-const prisma = new PrismaClient();
 const jwtSecret = process.env.JWT_SECRET || "holaMundo2025";
 
 export const registro = async(dto:RegistroDto)=>{
-    /**https://www.npmjs.com/package/bcrypt/ */ 
     try {
-
-        const userExistente= await prisma.user.findFirst({
+        // primero buscamos si el usuario existe ya que los campos username y email son unicos
+        const userExistente = await prisma.user.findFirst({
             where: {
-                OR:[
-                    {username:dto.username},
-                    {email:dto.email}
+                OR: [
+                    { username: dto.username },
+                    { email: dto.email }
                 ]
             }
         });
 
-        if(userExistente){
-            const data = {
-                message:"el usuario ya existe",
-                status:400
-            }
-            return data;
+        if (userExistente) {
+            return {
+                message: "El usuario ya existe",
+                status: 400
+            };
         }
 
         const { username, password, email } = dto;
 
+        // generamos el hash de la contraseña
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(password, salt);
 
+        // creamos el usuario
         const user = await prisma.user.create({
-            data:{
-                username:username,
-                email:email,
-                password:hashedPassword
+            data: {
+                username: username,
+                email: email,
+                password: hashedPassword
             },
             select: {
-                 id: true,
-                 username: true,
-                 email: true 
-            } // evitamos devolver la contraseña
-        })
-        
-        const data = {
-            message:"usuario registrado exitosamente",
-            status:201,
-            data:user
-        }
+                id: true,
+                username: true,
+                email: true
+            }//aqui decido que datos mostrar y ovio no mostramos la contraseña
+        });
 
-    return data;
+        return {
+            message: "Usuario registrado exitosamente",
+            status: 201,
+            data: user
+        };
 
     } catch (error) {
-        console.log(`error de servidor: ${error}`)
+        console.log(`error en registro: ${error}`);
+        return {
+            message: "error al registrar el usuario",
+            status: 500
+        };
     }
 }
 
@@ -69,12 +70,18 @@ export const login = async(dto:LoginDto)  =>{
     })
 
     if(!user){
-        throw new Error("el usuario no existe");
+        return {
+            message: "el usuario no existe",
+            status: 404
+        };
     }
 
-    const isPasswordValid = await bcrypt.compare(dto.password, user.password);
+    const isPasswordValid = await bcrypt.compare(dto.password, String(user.password)); 
     if(!isPasswordValid){
-        throw new Error("contraseña invalida");
+        return {
+            message: "contraseña invalida",
+            status: 401
+        };
     }
 
     const payload: TokenPayload = {
