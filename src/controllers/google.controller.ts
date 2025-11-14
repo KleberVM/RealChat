@@ -8,7 +8,7 @@ export const googleCallbackController = (req: Request, res: Response) => {
         if (!user) {
             return res.status(401).send({
                 message: "error de autenticacion",
-                status: 401
+                status: 401,
             });
         }
         
@@ -16,11 +16,23 @@ export const googleCallbackController = (req: Request, res: Response) => {
         const resultado = generarTokenGoogle(user);
         
         // enviamos la respuesta con el token
-        res.status(200).send({
-            message: "autenticacion con Google exitosa",
-            status: 200,
-            data: resultado
-        });
+        res.status(200).send(
+            `<!DOCTYPE html>
+            <html>
+            <head>
+                <title>RealChat</title>
+            </head>
+            <body>
+                <h1>RealChat</h1>
+                <p>Has iniciado sesion con Google</p>
+                <script>
+                    localStorage.setItem('token', '${resultado.token}');
+                    localStorage.setItem('user', '${JSON.stringify(resultado.user)}');
+                    window.location.href = '/home.html';
+                </script>
+            </body>
+            </html>`
+        );
     } catch (error) {
         console.log("error en googleCallbackController:", error);
         res.status(500).send({

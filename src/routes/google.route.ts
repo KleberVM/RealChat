@@ -3,18 +3,19 @@ import passport from "passport";
 import { googleCallbackController } from "../controllers/google.controller";
 
 const router = Router();
-// hola mundo
+
 // ruta para iniciar autenticacion con Google
 router.get("/google", 
     passport.authenticate("google", {
         scope: ["profile", "email"]
     })
 );
+
 // callback de Google OAuth
 router.get("/google/callback", 
     passport.authenticate("google", { 
         session: false,
-        failureRedirect: "/login"
+        failureRedirect: "/index.html"
     }),
     googleCallbackController
 );

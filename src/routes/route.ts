@@ -9,11 +9,11 @@ import error404Routes from "./error404.route";
 
 const router = Router();
 
-router.use("/", authRoutes);
-router.use("/", googleRoutes);
-router.use("/", healthCheckRoutes);
-router.use("/", chatRoutes);
-router.use("/", messageRoutes);
+router.use("/api/auth", authRoutes);
+router.use("/api/auth", googleRoutes);
+router.use("/api", healthCheckRoutes);
+router.use("/api", chatRoutes);
+router.use("/api", messageRoutes);
 router.use("/", error404Routes);
 
 export default router;
