@@ -1,10 +1,10 @@
 # 💬 RealChat
 
-**RealChat** es una aplicación web de mensajeria en tiempo real que permite a los usuarios comunicarse instantáneamente mediante chats individuales y grupales. La plataforma ofrece autenticación segura con JWT y Google OAuth 2.0, comunicación bidireccional en tiempo real usando WebSockets (Socket.IO), y una arquitectura moderna basada en TypeScript, Express y PostgreSQL.
+**RealChat** es una aplicacion web de mensajeria en tiempo real que permite a los usuarios comunicarse instantaneamente mediante chats individuales y grupales. La plataforma ofrece autenticacion segura con JWT y Google OAuth 2.0, comunicacion bidireccional en tiempo real usando WebSockets (Socket.IO), y una arquitectura moderna basada en TypeScript, Express y PostgreSQL.
 
 ---
 
-## Instalación
+## Instalacion
 
 ### **1. Clonar el Repositorio**
 
@@ -57,11 +57,11 @@ GOOGLE_CALLBACK_URL=http://localhost:3000/api/auth/google/callback
 # Iniciar contenedor de PostgreSQL
 docker-compose up -d
 
-# Verificar que está corriendo
+# Verificar que esta corriendo
 docker ps
 ```
 
-Esto iniciará PostgreSQL en el puerto 5432 con las credenciales del archivo `.env`.
+Esto iniciara PostgreSQL en el puerto 5432 con las credenciales del archivo `.env`.
 
 ### **5. Configurar Prisma y Base de Datos**
 
@@ -82,27 +82,27 @@ npx prisma studio
 # Modo desarrollo (con hot-reload)
 npm run dev
 
-# El servidor estará en http://localhost:3000
+# El servidor estara en http://localhost:3000
 ```
 ---
 
 ## Tabla de Contenidos
 
-- [Descripción](#-descripción)
+- [Descripcion](#-descripcion)
 - [Caracteristicas](#-caracteristicas)
 - [Tecnologias](#-tecnologias)
 - [Requisitos Previos](#-requisitos-previos)
-- [Instalación](#-instalación)
-- [Configuración](#-configuración)
+- [Instalacion](#-instalacion)
+- [Configuracion](#-configuracion)
 - [Comandos](#-comandos)
 - [Pruebas con Postman](#-pruebas-con-postman)
 - [API Endpoints](#-api-endpoints)
 - [Socket.IO Eventos](#-socketio-eventos)
 ---
 
-## Configuración
+## Configuracion
 
-### **Configuración de Docker**
+### **Configuracion de Docker**
 
 El archivo `docker-compose.yml` configura PostgreSQL:
 
@@ -121,9 +121,9 @@ services:
       - postgres_data:/var/lib/postgresql/data
 ```
 
-### **Configuración de TypeScript**
+### **Configuracion de TypeScript**
 
-El archivo `tsconfig.json` define la configuración de TypeScript:
+El archivo `tsconfig.json` define la configuracion de TypeScript:
 
 - **Target**: ES2020
 - **Module**: CommonJS
@@ -131,7 +131,7 @@ El archivo `tsconfig.json` define la configuración de TypeScript:
 - **Source Maps**: Habilitado
 - **Decorators**: Habilitado (para class-validator)
 
-### **Configuración de Prisma**
+### **Configuracion de Prisma**
 
 El archivo `prisma.config.ts` configura Prisma ORM:
 
@@ -148,22 +148,22 @@ export default defineConfig({
 });
 ```
 
-### **Configuración de Google OAuth**
+### **Configuracion de Google OAuth**
 
 1. Ve a [Google Cloud Console](https://console.cloud.google.com/)
 2. Crea un nuevo proyecto o selecciona uno existente
 3. Habilita la API de Google+ 
 4. Ve a "Credenciales" → "Crear credenciales" → "ID de cliente de OAuth 2.0"
 5. Configura:
-   - **Tipo de aplicación**: Aplicación web
+   - **Tipo de aplicacion**: Aplicacion web
    - **URIs de redireccionamiento autorizados**: 
      - `http://localhost:3000/api/auth/google/callback` (desarrollo)
-     - `https://tu-dominio.com/api/auth/google/callback` (producción)
+     - `https://tu-dominio.com/api/auth/google/callback` (produccion)
 6. Copia el Client ID y Client Secret al archivo `.env`
 
 ---
 
-## 🔧 Comandos
+## Comandos
 
 ### **Desarrollo**
 
@@ -174,7 +174,7 @@ npm run dev
 # Compilar TypeScript
 npm run build
 
-# Ejecutar versión compilada
+# Ejecutar version compilada
 npm start
 ```
 
@@ -206,10 +206,10 @@ npx prisma generate
 # Aplicar cambios del schema a la BD
 npx prisma db push
 
-# Crear una migración
+# Crear una migracion
 npx prisma migrate dev --name nombre_migracion
 
-# Aplicar migraciones en producción
+# Aplicar migraciones en produccion
 npx prisma migrate deploy
 
 # Abrir Prisma Studio (GUI para ver/editar datos)
@@ -237,36 +237,36 @@ npm audit fix
 
 ---
 
-## Descripción
+## Descripcion
 
-RealChat es una plataforma completa de mensajeria que combina lo mejor de las tecnologias modernas para ofrecer una experiencia de chat fluida y segura. La aplicación permite:
+RealChat es una plataforma completa de mensajeria que combina lo mejor de las tecnologias modernas para ofrecer una experiencia de chat fluida y segura. La aplicacion permite:
 
-- **Comunicación en tiempo real** mediante WebSockets con Socket.IO
-- **Autenticación múltiple** con email/password y Google OAuth 2.0
-- **Chats individuales y grupales** con gestión de participantes
+- **Comunicacion en tiempo real** mediante WebSockets con Socket.IO
+- **Autenticacion múltiple** con email/password y Google OAuth 2.0
+- **Chats individuales y grupales** con gestion de participantes
 - **Persistencia de datos** usando PostgreSQL y Prisma ORM
 - **Arquitectura escalable** con TypeScript y Express
-- **Containerización** con Docker para desarrollo y despliegue
+- **Containerizacion** con Docker para desarrollo y despliegue
 
-La plataforma está diseñada para ser fácil de configurar, desarrollar y desplegar, con soporte completo para desarrollo local usando Docker Compose y despliegue en la nube con Railway.
+La plataforma esta diseñada para ser facil de configurar, desarrollar y desplegar, con soporte completo para desarrollo local usando Docker Compose y despliegue en la nube con Railway.
 
 ---
 
 ## Caracteristicas
 
-- **Autenticación Segura**
+- **Autenticacion Segura**
   - Login con email y contraseña
-  - Autenticación con Google OAuth 2.0
+  - Autenticacion con Google OAuth 2.0
   - Tokens JWT para sesiones stateless
   - Hash de contraseñas con bcrypt
 
 - **Mensajeria en Tiempo Real**
-  - Comunicación bidireccional con Socket.IO
-  - Mensajes instantáneos
-  - Indicador de "está escribiendo"
+  - Comunicacion bidireccional con Socket.IO
+  - Mensajes instantaneos
+  - Indicador de "esta escribiendo"
   - Notificaciones en tiempo real
 
-- **Gestión de Chats**
+- **Gestion de Chats**
   - Chats individuales (1 a 1)
   - Chats grupales (múltiples participantes)
   - Agregar/remover participantes
@@ -276,7 +276,7 @@ La plataforma está diseñada para ser fácil de configurar, desarrollar y despl
   - TypeScript para type-safety
   - Prisma ORM para base de datos
   - Express para API REST
-  - Docker para containerización
+  - Docker para containerizacion
 
 ---
 
@@ -284,46 +284,46 @@ La plataforma está diseñada para ser fácil de configurar, desarrollar y despl
 
 ### **Backend**
 
-| Tecnologia | Versión | Descripción |
+| Tecnologia | Version | Descripcion |
 |------------|---------|-------------|
 | **Node.js** | 20.x | Runtime de JavaScript para el servidor |
-| **TypeScript** | 5.9.3 | Superset de JavaScript con tipado estático |
+| **TypeScript** | 5.9.3 | Superset de JavaScript con tipado estatico |
 | **Express** | 5.1.0 | Framework web minimalista y flexible |
-| **Socket.IO** | 4.8.1 | Libreria para comunicación en tiempo real con WebSockets |
+| **Socket.IO** | 4.8.1 | Libreria para comunicacion en tiempo real con WebSockets |
 
 ### **Base de Datos**
 
-| Tecnologia | Versión | Descripción |
+| Tecnologia | Version | Descripcion |
 |------------|---------|-------------|
 | **PostgreSQL** | 15-alpine | Base de datos relacional robusta |
 | **Prisma** | 6.19.0 | ORM moderno con type-safety y migraciones |
-| **Docker** | - | Containerización de PostgreSQL |
+| **Docker** | - | Containerizacion de PostgreSQL |
 
-### **Autenticación y Seguridad**
+### **Autenticacion y Seguridad**
 
-| Tecnologia | Versión | Descripción |
+| Tecnologia | Version | Descripcion |
 |------------|---------|-------------|
-| **JWT** | 9.0.2 | Tokens para autenticación stateless |
+| **JWT** | 9.0.2 | Tokens para autenticacion stateless |
 | **bcrypt** | 6.0.0 | Hash de contraseñas con salt |
-| **Passport** | 0.7.0 | Middleware de autenticación |
+| **Passport** | 0.7.0 | Middleware de autenticacion |
 | **passport-google-oauth20** | 2.0.0 | Estrategia de Google OAuth 2.0 |
 
 ### **Utilidades**
 
-| Tecnologia | Versión | Descripción |
+| Tecnologia | Version | Descripcion |
 |------------|---------|-------------|
 | **dotenv** | 17.2.3 | Variables de entorno |
 | **body-parser** | 2.2.0 | Parser de body HTTP |
-| **class-validator** | 0.14.2 | Validación de DTOs |
+| **class-validator** | 0.14.2 | Validacion de DTOs |
 | **nodemailer** | 7.0.10 | Envio de emails |
 
 ### **Desarrollo**
 
-| Tecnologia | Versión | Descripción |
+| Tecnologia | Version | Descripcion |
 |------------|---------|-------------|
 | **nodemon** | 3.1.10 | Hot-reload en desarrollo |
 | **ts-node** | 10.9.2 | Ejecutar TypeScript directamente |
-| **copyfiles** | 2.4.1 | Copiar archivos estáticos |
+| **copyfiles** | 2.4.1 | Copiar archivos estaticos |
 
 
 ---
@@ -341,16 +341,16 @@ Antes de comenzar, asegúrate de tener instalado:
 
 ## Pruebas con Postman
 
-### **Importar Colección**
+### **Importar Coleccion**
 
 1. Abre Postman
 2. Click en "Import"
 3. Selecciona el archivo `Real Chat.postman_collection.json`
-4. La colección se importará con todos los endpoints
+4. La coleccion se importara con todos los endpoints
 
 ### **Configurar Variables**
 
-1. En Postman, ve a la colección "Real Chat"
+1. En Postman, ve a la coleccion "Real Chat"
 2. Click en "Variables"
 3. Configura la variable `url`:
    ```
@@ -359,10 +359,10 @@ Antes de comenzar, asegúrate de tener instalado:
 
 ### **Endpoints Disponibles**
 
-La colección incluye:
+La coleccion incluye:
 
 #### **Auth**
-- `POST /api/auth/login` - Iniciar sesión
+- `POST /api/auth/login` - Iniciar sesion
 - `POST /api/auth/registro` - Registrarse
 
 #### **Chats**
@@ -395,7 +395,7 @@ La colección incluye:
    }
    ```
 
-2. **Iniciar sesión**:
+2. **Iniciar sesion**:
    ```
    POST /api/auth/login
    Body: {
@@ -405,7 +405,7 @@ La colección incluye:
    ```
    Copia el `token` de la respuesta.
 
-3. **Configurar autenticación**:
+3. **Configurar autenticacion**:
    - En cada request, ve a "Authorization"
    - Selecciona "Bearer Token"
    - Pega el token copiado
@@ -435,7 +435,7 @@ La colección incluye:
 
 ## API Endpoints
 
-### **Autenticación**
+### **Autenticacion**
 
 ```http
 POST /api/auth/registro
@@ -491,7 +491,7 @@ Authorization: Bearer <token>
 ```http
 GET /api/chats/:chatId
 Authorization: Bearer <token>
-# Retorna información del chat
+# Retorna informacion del chat
 ```
 
 ```http
@@ -565,7 +565,7 @@ Authorization: Bearer <token>
 
 ## Socket.IO Eventos
 
-### **Conexión**
+### **Conexion**
 
 ```javascript
 // Cliente se conecta con token JWT
@@ -578,7 +578,7 @@ const socket = io('http://localhost:3000', {
 
 ### **Eventos Cliente → Servidor**
 
-| Evento | Parámetros | Descripción |
+| Evento | Parametros | Descripcion |
 |--------|-----------|-------------|
 | `join_chat` | `chatId: number` | Unirse a un chat |
 | `leave_chat` | `chatId: number` | Salir de un chat |
@@ -589,15 +589,15 @@ const socket = io('http://localhost:3000', {
 
 ### **Eventos Servidor → Cliente**
 
-| Evento | Datos | Descripción |
+| Evento | Datos | Descripcion |
 |--------|-------|-------------|
-| `joined_chat` | `{ chatId: number }` | Confirmación de unión |
+| `joined_chat` | `{ chatId: number }` | Confirmacion de union |
 | `new_message` | `Message` | Nuevo mensaje recibido |
 | `user_typing` | `{ userId: number, username: string, isTyping: boolean }` | Usuario escribiendo |
-| `user_joined` | `{ userId: number, username: string }` | Usuario se unió |
-| `user_left` | `{ userId: number, username: string }` | Usuario salió |
+| `user_joined` | `{ userId: number, username: string }` | Usuario se unio |
+| `user_left` | `{ userId: number, username: string }` | Usuario salio |
 | `messages_loaded` | `Message[]` | Historial de mensajes |
-| `chat_info` | `Chat` | Información del chat |
+| `chat_info` | `Chat` | Informacion del chat |
 | `error` | `{ message: string }` | Error |
 
 ### **Ejemplo de Uso**
@@ -606,7 +606,7 @@ const socket = io('http://localhost:3000', {
 // Unirse a un chat
 socket.emit('join_chat', 1);
 
-// Escuchar confirmación
+// Escuchar confirmacion
 socket.on('joined_chat', (data) => {
   console.log('Unido al chat:', data.chatId);
 });
@@ -622,7 +622,7 @@ socket.on('new_message', (message) => {
   console.log('Nuevo mensaje:', message);
 });
 
-// Notificar que estás escribiendo
+// Notificar que estas escribiendo
 socket.emit('typing', {
   chatId: 1,
   isTyping: true
@@ -631,7 +631,7 @@ socket.emit('typing', {
 // Ver cuando otros escriben
 socket.on('user_typing', (data) => {
   if (data.isTyping) {
-    console.log(`${data.username} está escribiendo...`);
+    console.log(`${data.username} esta escribiendo...`);
   }
 });
 ```
